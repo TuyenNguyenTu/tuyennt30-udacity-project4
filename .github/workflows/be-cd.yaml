@@ -103,7 +103,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -116,10 +116,12 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: backend
           IMAGE_TAG: latest
+          DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
         run: |
           echo "Registry: $REGISTRY"
           echo "Repository: $REPOSITORY"
           echo "Image Tag: $IMAGE_TAG"
+          echo "Default region: $DEFAULT_REGION"
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker images
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
@@ -145,8 +147,8 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-          
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -171,4 +173,3 @@ jobs:
       - name: Apply Kubernetes resources
         run: kustomize build | kubectl apply -f -
         working-directory: ./starter/backend/k8s
-

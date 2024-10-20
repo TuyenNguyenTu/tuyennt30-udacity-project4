@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'starter/frontend/**'
+      - "starter/frontend/**"
 env:
   NODE_VERSION: 18.x
 
@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: | 
+        run: |
           npm install
 
       - name: Run tests
@@ -75,13 +75,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          mask-password: 'true'
+          mask-password: "true"
 
       - name: Build, Tag, and Push dockerimage to Amazon ECR
         env:
@@ -120,7 +120,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -133,7 +133,7 @@ jobs:
           aws eks update-kubeconfig --name cluster
 
       - name: Run init.sh
-        run:  |
+        run: |
           ./init.sh || true
         working-directory: ./setup
 
