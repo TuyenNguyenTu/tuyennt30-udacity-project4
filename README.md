@@ -6,6 +6,10 @@ You'll find 2 folders, one named `frontend` and one named `backend`, where each 
 
 ## Deliverables
 
+### URL:
+1. [BackEnd](http://a7202044df9d14c1ead9f382c0370ea0-1128780372.us-east-1.elb.amazonaws.com/movies)
+2. [FrontEnd](http://ad9916ce93ed940069d101e29d4156c6-349243611.us-east-1.elb.amazonaws.com/)
+
 ### Frontend
 
 1. A Continuous Integration workflow that:
@@ -350,7 +354,7 @@ kustomize build | kubectl apply -f -
 
 ## Result
 1. Github workflow
-<img src="./ScreenShots/GitHub_Workflow_all.png">
+<img src="./ScreenShots/Github_Workflows.png">
 2. Backend Continuous Deployment
 <img src="./ScreenShots/BE_CD.png">
 3. Frontend Continuous Deployment
