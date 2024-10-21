@@ -105,8 +105,6 @@ All of the tools below will be available in the workspace
 * [docker](https://docs.docker.com/desktop/install/debian/) - Used to build the frontend and backend applications
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) - Used to apply the kubernetes manifests
 * [pipenv](https://pipenv.pypa.io/en/latest/install/#pragmatic-installation-of-pipenv) - Used for mananging Python version and dependencies
-* [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) - Used for managing NodeJS versions
-* [tfswitch](https://tfswitch.warrensbox.com/Install/) Used for managing Terraform versions
 * [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) Used for building the Kubernetes manifests dynamically in the CI environment
 * [jq](https://stedolan.github.io/jq/download/) for parsing JSON more easily on the command line
 
@@ -139,60 +137,6 @@ Tests:       3 passed, 3 total
 Snapshots:   0 total
 Time:        1.33 s
 Ran all test suites.
-```
-
-To simulate a failure in the test coverage, which will be needed to ensure your CI/CD pipeline fails on bad tests, set the MOVIE_HEADING variable before the command like so:
-
-```bash
-FAIL_TEST=true CI=true npm test
-```
-
-As the test is expecting the heading to contain a certain value, we can simulate a failure by changing it with an inline or environment variable. If you use the environment variable, make sure to unset it when you're done testing
-
-```bash
-# Expect tests to fail with this set to anything except Movie List
-export FAIL_TEST=true
-CI=true npm test
-
-# Expect tests to be passing again
-unset MOVIE_HEADING
-CI=true npm test
-```
-
-```bash
-# Expected failure output
-FAIL src/components/__tests__/App.test.js
-  ● renders Movie List heading
-
-    TestingLibraryElementError: Unable to find an element with the text: messed_up. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
-
-    Ignored nodes: comments, script, style
-    <body>
-      <div>
-        <div>
-          <h1>
-            Movie List
-          </h1>
-          <ul />
-        </div>
-      </div>
-    </body>
-
-       8 | test('renders Movie List heading', () => {
-       9 |   render(<App />);
-    > 10 |   const linkElement = screen.getByText(movieHeading);
-         |                              ^
-      11 |   expect(linkElement).toBeInTheDocument();
-      12 | });
-      13 |
-
-      at Object.getElementError (node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
-      at allQuery (node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38)
-      at query (node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17)
-      at getByText (node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
-      at Object.<anonymous> (src/components/__tests__/App.test.js:10:30)
-
-PASS src/components/__tests__/MovieList.test.js
 ```
 
 ### Running linter
